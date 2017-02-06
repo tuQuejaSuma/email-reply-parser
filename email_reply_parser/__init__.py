@@ -33,11 +33,16 @@ class EmailReplyParser(object):
 
 
 class EmailMessage(object):
-    """ An email message represents a parsed email body.
+    """
+    An email message represents a parsed email body.
+
+    QUOTE_HEADER comes in 2 ways;
+    ​2017-02-06 14:20 GMT-03:00 <sender@domain>:
+    On Mon, Feb 6, 2017 at 2:20 PM, <sender@domain> wrote:
     """
 
     SIG_REGEX = re.compile(r'(--|__|-\w)|(^Sent from my (\w+\s*){1,3})')
-    QUOTE_HDR_REGEX = re.compile('On.*wrote:$')
+    QUOTE_HDR_REGEX = re.compile('On.*wrote:$|.*(?=GMT-?[:0-9]{5} <.+@.+>:$)')
     QUOTED_REGEX = re.compile(r'(>+)')
     HEADER_REGEX = re.compile(r'^(From|Sent|To|Subject): .+')
     _MULTI_QUOTE_HDR_REGEX = r'(?!On.*On\s.+?wrote:)(On\s(.+?)wrote:)'
